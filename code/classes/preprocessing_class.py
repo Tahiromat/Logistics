@@ -1,13 +1,12 @@
 import pandas
 
-class PreProcessingMethod:
 
+class PreProcessingMethod:
     def __init__(self, data: pandas.DataFrame):
         self.data = data
 
-
     # create a method check if missing values percentage is too many then drop the row or columns based on their percentages
-    
+
     def drop_unused_columns(self):
         pass
 
