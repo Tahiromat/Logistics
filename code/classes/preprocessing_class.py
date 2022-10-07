@@ -23,7 +23,10 @@ class PreProcessingMethod:
         pass
 
     def transform_binary_encoding(self):
-        pass
+        pass 
+
+
+    
 
     def transform_on_hot_encoding(self):
         pass
