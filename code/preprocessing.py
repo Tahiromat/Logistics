@@ -7,6 +7,12 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 
+# import os 
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+# gpu_devices = tf.config.experimental.list_physical_devices('PU')
+# for device in gpu_devices:
+#    tf.config.experimental.set_memory_growth(device, True)
+
 
 DATA_SOURCE = "data/SCMS_Delivery_History_Dataset.csv"
 
@@ -144,46 +150,46 @@ print("\n")"""
 # print(y_train)
 
 
-print((X_train.shape(2)))
+# print((X_train.shape(2)))
 
-# inputs = tf.keras.Input(shape=(771,))
-# x = tf.keras.layers.Dense(128, activation="relu")(inputs)
-# x = tf.keras.layers.Dense(128, activation="relu")(x)
-# outputs = tf.keras.layers.Dense(4, activation="softmax")(x)
+inputs = tf.keras.Input(shape=(771,))
+x = tf.keras.layers.Dense(128, activation="relu")(inputs)
+x = tf.keras.layers.Dense(128, activation="relu")(x)
+outputs = tf.keras.layers.Dense(4, activation="softmax")(x)
 
-# model = tf.keras.Model(inputs=inputs, outputs=outputs)
+model = tf.keras.Model(inputs=inputs, outputs=outputs)
 
-# model.compile(
-#     optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"]
-# )
+model.compile(
+    optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"]
+)
 
-# history = model.fit(
-#     X_train,
-#     y_train,
-#     validation_split=0.2,
-#     batch_size=32,
-#     epochs=100,
-#     callbacks=[
-#         tf.keras.callbacks.EarlyStopping(
-#             monitor="val_loss", patience=15, restore_best_weights=True
-#         )
-#     ],
-# )
+history = model.fit(
+    X_train,
+    y_train,
+    validation_split=0.2,
+    batch_size=32,
+    epochs=100,
+    callbacks=[
+        tf.keras.callbacks.EarlyStopping(
+            monitor="val_loss", patience=15, restore_best_weights=True
+        )
+    ],
+)
 
-# y_pred = numpy.argmax(model.predict(X_test), axis=1)
+y_pred = numpy.argmax(model.predict(X_test), axis=1)
 
-# cm = confusion_matrix(y_test, y_pred, labels=list(LABEL_MAPPING.values()))
-# clr = classification_report(y_test, y_pred, labels=list(LABEL_MAPPING.values()), target_names=list(LABEL_MAPPING.keys()))
+cm = confusion_matrix(y_test, y_pred, labels=list(LABEL_MAPPING.values()))
+clr = classification_report(y_test, y_pred, labels=list(LABEL_MAPPING.values()), target_names=list(LABEL_MAPPING.keys()))
 
-# print("Test Set Accuracy: {:.2f}%".format(model.evaluate(X_test, y_test, verbose=0)[1] * 100))
+print("Test Set Accuracy: {:.2f}%".format(model.evaluate(X_test, y_test, verbose=0)[1] * 100))
 
-# plt.figure(figsize=(8, 8))
-# sns.heatmap(cm, annot=True, fmt='g', vmin=0, cmap='Blues', cbar=False)
-# plt.xticks(ticks=[0.5, 1.5, 2.5, 3.5], labels=list(LABEL_MAPPING.keys()))
-# plt.yticks(ticks=[0.5, 1.5, 2.5, 3.5], labels=list(LABEL_MAPPING.keys()))
-# plt.xlabel("Predicted")
-# plt.ylabel("Actual")
-# plt.title("Confusion Matrix")
-# plt.show()
+plt.figure(figsize=(8, 8))
+sns.heatmap(cm, annot=True, fmt='g', vmin=0, cmap='Blues', cbar=False)
+plt.xticks(ticks=[0.5, 1.5, 2.5, 3.5], labels=list(LABEL_MAPPING.keys()))
+plt.yticks(ticks=[0.5, 1.5, 2.5, 3.5], labels=list(LABEL_MAPPING.keys()))
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.title("Confusion Matrix")
+plt.show()
 
-# print("Classification Report:\n----------------------\n", clr)
+print("Classification Report:\n----------------------\n", clr)
