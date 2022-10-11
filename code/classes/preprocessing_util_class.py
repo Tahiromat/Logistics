@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 
 
 class PreProcessingMethod:
+    
     """
     The method purpose is the pre-processing data from the given data source
     """
