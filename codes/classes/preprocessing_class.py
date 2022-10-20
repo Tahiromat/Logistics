@@ -1,11 +1,11 @@
-import pandas 
+import pandas
 import numpy
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
 
-class PreProcessingMethod:
-    
+class PreProcessingClass:
+
     """
     The method purpose is the pre-processing data from the given data source
     """
@@ -67,7 +67,7 @@ class PreProcessingMethod:
 
         return self.drop_unused_columns(columns_should_delete)
 
-    def find_high_cardinality_columns(self):
+    def find_high_cardinality_columns(self) -> dict:
         data = self.read_data()
         dict = {
             column: len(data[column].unique())
@@ -130,9 +130,9 @@ class PreProcessingMethod:
         return X_train, X_test, y_train, y_test
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    cls = PreProcessingMethod("data/SCMS_Delivery_History_Dataset.csv")
-    data = cls.read_data()
+#     cls = PreProcessingClass("data/SCMS_Delivery_History_Dataset.csv")
+#     data = cls.read_data()
 
-    print(data)
+#     print(data)

@@ -1,9 +1,15 @@
 import streamlit
 
+from ui.home_page import HomePage
+from ui.analytics_page import AnalyticsPage
+from ui.algorithm_page import AlgorithmPage
+
 def app():
 
-
-    streamlit.title("App Home")
+   HomePage()
+   AnalyticsPage()
+   AlgorithmPage()
+   
 
 
 if __name__ == "__main__":

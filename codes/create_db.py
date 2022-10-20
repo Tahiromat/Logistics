@@ -1,5 +1,6 @@
 import csv
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
 # Database connection settings
@@ -9,6 +10,7 @@ mydb = pymysql.connect(
 
 # To access column names in csv file
 import pandas as pd
+
 d = pd.read_csv("0_data/SCMS_Delivery_History_Dataset.csv")
 print(d.columns)
 

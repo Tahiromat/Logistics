@@ -1,4 +1,4 @@
-import numpy 
+import numpy
 import pandas
 import seaborn as sns
 import tensorflow as tf
@@ -7,16 +7,14 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 
-# import os 
-# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-# gpu_devices = tf.config.experimental.list_physical_devices('PU')
-# for device in gpu_devices:
-#    tf.config.experimental.set_memory_growth(device, True)
+
+from classes.preprocessing_class import PreProcessingClass
 
 
 DATA_SOURCE = "data/SCMS_Delivery_History_Dataset.csv"
 
 data = pandas.read_csv(DATA_SOURCE)
+
 
 def preprocess_inputs(df, label_mapping):
 
@@ -179,12 +177,21 @@ history = model.fit(
 y_pred = numpy.argmax(model.predict(X_test), axis=1)
 
 cm = confusion_matrix(y_test, y_pred, labels=list(LABEL_MAPPING.values()))
-clr = classification_report(y_test, y_pred, labels=list(LABEL_MAPPING.values()), target_names=list(LABEL_MAPPING.keys()))
+clr = classification_report(
+    y_test,
+    y_pred,
+    labels=list(LABEL_MAPPING.values()),
+    target_names=list(LABEL_MAPPING.keys()),
+)
 
-print("Test Set Accuracy: {:.2f}%".format(model.evaluate(X_test, y_test, verbose=0)[1] * 100))
+print(
+    "Test Set Accuracy: {:.2f}%".format(
+        model.evaluate(X_test, y_test, verbose=0)[1] * 100
+    )
+)
 
 plt.figure(figsize=(8, 8))
-sns.heatmap(cm, annot=True, fmt='g', vmin=0, cmap='Blues', cbar=False)
+sns.heatmap(cm, annot=True, fmt="g", vmin=0, cmap="Blues", cbar=False)
 plt.xticks(ticks=[0.5, 1.5, 2.5, 3.5], labels=list(LABEL_MAPPING.keys()))
 plt.yticks(ticks=[0.5, 1.5, 2.5, 3.5], labels=list(LABEL_MAPPING.keys()))
 plt.xlabel("Predicted")
