@@ -8,7 +8,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 
 
-from classes.preprocessing_class import PreProcessingClass
 
 
 DATA_SOURCE = "data/SCMS_Delivery_History_Dataset.csv"
