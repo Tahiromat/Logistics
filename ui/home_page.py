@@ -10,6 +10,8 @@ class HomePage:
 
         self.streamlit.title("HOME PAGE")
 
-        data = classes.PreProcessingClass(helpers.Constants().get_data_path()).read_data()
+        data = classes.PreProcessingClass(
+            helpers.Constants().get_data_path()
+        ).read_data()
 
         self.streamlit.write(data.head())
