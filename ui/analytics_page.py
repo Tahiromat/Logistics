@@ -1,8 +1,8 @@
-from ui.ui_components import UIComponents as UIC
+import streamlit
 
 
 class AnalyticsPage:
     def __init__(self):
-        self.ui_class = UIC()
+        pass
 
-    title = UIC().create_title("ANALYTICS PAGE")
+    streamlit.title("ANALYTICS PAGE")

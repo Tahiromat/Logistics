@@ -1,8 +1,8 @@
-from ui.ui_components import UIComponents as UIC
+import streamlit
 
 
 class AlgorithmPage:
     def __init__(self):
-        self.ui_class = UIC()
+        pass
 
-    title = UIC().create_title("ALGORITHM PAGE")
+    streamlit.title("ALGORITHM PAGE")

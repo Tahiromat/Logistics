@@ -1,9 +1,14 @@
-from ui.ui_components import UIComponents as UIC
+import streamlit
+import classes
+import helpers
+
 
 class HomePage:
     def __init__(self):
-        self.ui_class = UIC()
+        pass
 
-    title = UIC().create_title("HOME PAGE")
+    streamlit.title("HOME PAGE")
 
-    
+    data = classes.PreProcessingClass(helpers.Constants().get_data_path()).read_data()
+
+    streamlit.write(data.head())

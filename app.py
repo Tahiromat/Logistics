@@ -1,12 +1,15 @@
-from ui.home_page import HomePage
-from ui.analytics_page import AnalyticsPage
-from ui.algorithm_page import AlgorithmPage
+""" Summary_:
+        The app will be start from here.
+"""
+
+import ui
+
 
 def app():
 
-    HomePage()
-    AnalyticsPage()
-    AlgorithmPage()
+    ui.HomePage()
+    ui.AnalyticsPage()
+    ui.AlgorithmPage()
 
 
 if __name__ == "__main__":
