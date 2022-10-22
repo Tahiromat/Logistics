@@ -7,4 +7,3 @@ class NavigationSideBar:
 
     def create_sidebar(self):
         pass
-        

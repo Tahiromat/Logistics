@@ -1,5 +1,6 @@
 import pandas
 
+
 class AnalyticsMethod:
     def __init__(self, data: pandas.DataFrame):
         self.data = data
@@ -15,6 +16,3 @@ class AnalyticsMethod:
 
     def create_histogram_chart(self):
         pass
-
-    
-

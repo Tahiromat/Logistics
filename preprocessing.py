@@ -8,8 +8,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 
 
-
-
 DATA_SOURCE = "data/SCMS_Delivery_History_Dataset.csv"
 
 data = pandas.read_csv(DATA_SOURCE)

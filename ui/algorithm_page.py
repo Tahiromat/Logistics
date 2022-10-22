@@ -1,4 +1,4 @@
-from codes.classes.ui_class import UIClass as UIC
+from classes.ui_class import UIClass as UIC
 
 
 class AlgorithmPage:
