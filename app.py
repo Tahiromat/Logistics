@@ -3,14 +3,17 @@
 """
 
 import ui
+import streamlit
+from streamlit_option_menu import option_menu
 
+with streamlit.sidebar:
+    selected_page = option_menu("Main Menu", ["Home", 'Analytics', 'Algorithms'], 
+        icons=['house', 'list-task', 'gear'], menu_icon="cast", default_index=0, orientation="vertical")
 
-def app():
+if selected_page == "Home":
+        ui.HomePage(streamlit).home()
+elif selected_page == "Analytics":
+        ui.AnalyticsPage(streamlit).analytics()
+else:
+        ui.AlgorithmPage(streamlit).algorithm()
 
-    ui.HomePage()
-    ui.AnalyticsPage()
-    ui.AlgorithmPage()
-
-
-if __name__ == "__main__":
-    app()

@@ -1,8 +1,7 @@
-import streamlit
-
-
 class AnalyticsPage:
-    def __init__(self):
-        pass
+    def __init__(self, streamlit):
+        self.streamlit = streamlit
 
-    streamlit.title("ANALYTICS PAGE")
+
+    def analytics(self):
+        self.streamlit.title("ANALYTICS PAGE")

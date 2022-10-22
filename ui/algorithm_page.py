@@ -1,8 +1,8 @@
-import streamlit
-
-
 class AlgorithmPage:
-    def __init__(self):
-        pass
+    def __init__(self, streamlit):
+        self.streamlit = streamlit
 
-    streamlit.title("ALGORITHM PAGE")
+    
+    def algorithm(self):
+
+        self.streamlit.title("ALGORITHM PAGE")
