@@ -1,4 +1,4 @@
-from classes.ui_class import UIClass as UIC
+from ui.ui_components import UIComponents as UIC
 
 
 class AnalyticsPage:

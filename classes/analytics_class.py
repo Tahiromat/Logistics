@@ -1,7 +1,7 @@
 import pandas
 
 
-class AnalyticsMethod:
+class AnalyticsClass:
     def __init__(self, data: pandas.DataFrame):
         self.data = data
 
