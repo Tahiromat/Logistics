@@ -15,7 +15,7 @@ class PreProcessingClass:
 
     def __change_dtype_from_object_to_datetime(self, dataframe, param):
         return pandas.to_datetime(dataframe[param])
-    
+
     def find_unique_values(self, dataframe, param):
         return dataframe[param].unique()
 
@@ -24,7 +24,6 @@ class PreProcessingClass:
 
     def read_data(self):
         return pandas.read_csv(self.data_path)
-    
 
     def drop_unused_columns(self, columns: list = []):
         data = self.read_data()

@@ -6,12 +6,13 @@ from streamlit_option_menu import option_menu
 
 
 class HelperFunctions:
-
     def __init__(self, streamlit) -> None:
         self.streamlit = streamlit
 
     def page_configuration(self):
-        self.streamlit.set_page_config(page_title="Air Quality", page_icon="❗", layout="wide")
+        self.streamlit.set_page_config(
+            page_title="Air Quality", page_icon="❗", layout="wide"
+        )
         self.streamlit.markdown(
             """ <style> [data-testid="stSidebar"][aria-expanded="true"] > div:first-child {width: 280px;} </style> """,
             unsafe_allow_html=True,
@@ -40,13 +41,22 @@ class HelperFunctions:
             ui.AnalyticsPage(self.streamlit).analytics()
         else:
             ui.AlgorithmPage(self.streamlit).algorithm()
-    
+
     def select_box_for_filter_country(self, dataframe, param):
-        option = self.streamlit.selectbox(f"Filter by {param}", classes.PreProcessingClass(self.streamlit).find_unique_values(dataframe, param))
+        option = self.streamlit.selectbox(
+            f"Filter by {param}",
+            classes.PreProcessingClass(self.streamlit).find_unique_values(
+                dataframe, param
+            ),
+        )
         return option
 
     def get_latitude_and_longitude(self, address):
-        url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(address) +'?format=json'
+        url = (
+            "https://nominatim.openstreetmap.org/search/"
+            + urllib.parse.quote(address)
+            + "?format=json"
+        )
         response = requests.get(url).json()
         return response[0]["lat"], response[0]["lon"]
 
