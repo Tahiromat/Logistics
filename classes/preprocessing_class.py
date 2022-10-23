@@ -13,24 +13,30 @@ class PreProcessingClass:
     def __init__(self, data_path):
         self.data_path = data_path
 
-    def read_data(self):
+    def __change_dtype_from_object_to_datetime(self, dataframe, param):
+        return pandas.to_datetime(dataframe[param])
+    
+    def find_unique_values(self, dataframe, param):
+        return dataframe[param].unique()
 
+    def __find_unique_counts(self, dataframe, param, unique):
+        return list(dataframe[param]).count(unique)
+
+    def read_data(self):
         return pandas.read_csv(self.data_path)
+    
 
     def drop_unused_columns(self, columns: list = []):
         data = self.read_data()
-
         return data.drop(columns, axis=1)
 
     def drop_missign_rows(self, missing_target_rows):
         data = self.read_data()
-
         return data.drop(missing_target_rows, axis=0).reset_index(drop=True)
 
     def drop_missing_target_rows(self, target_column):
         data = self.read_data()
         missing_target_rows = data[data[target_column].isna()].index
-
         return self.drop_missign_rows(missing_target_rows)
 
     def check_number_of_missing_dates(self, date_features: list = []):
@@ -45,8 +51,23 @@ class PreProcessingClass:
 
             if col_name_missing_rate_list[1] > 0.2:
                 columns_should_delete.append(column)
-
         return self.drop_unused_columns(columns_should_delete)
+
+    def get_unique_values_and_count_for_column(self, dataframe, param):
+        dct = {}
+        unique_values = self.find_unique_values(dataframe, param)
+        for unique in unique_values:
+            count_of_unique_value = self.__find_unique_counts(dataframe, param, unique)
+            dct[str(unique)] = count_of_unique_value
+        return dct
+
+    def add_date_features(self, dataframe, param):
+        dataframe[param] = self.__change_dtype_from_object_to_datetime(dataframe, param)
+        dataframe["YEAR"] = dataframe[param].apply(lambda x: x.year)
+        dataframe["MONTH"] = dataframe[param].apply(lambda x: x.month)
+        dataframe["QUARTER"] = dataframe[param].apply(lambda x: x.quarter)
+        dataframe["DAY"] = dataframe[param].apply(lambda x: x.day)
+        return dataframe
 
     def drop_numeric_columns_with_too_many_missing_values(
         self, date_features: list = []
@@ -64,7 +85,6 @@ class PreProcessingClass:
 
             if col_name_missing_rate > 0.25:
                 columns_should_delete.append(column)
-
         return self.drop_unused_columns(columns_should_delete)
 
     def find_high_cardinality_columns(self) -> dict:
@@ -83,7 +103,6 @@ class PreProcessingClass:
         print(
             f"\n\n You should drop {columns_should_delete} columns because of high cardinality for model \n\n"
         )
-
         return dict
 
     def fill_categorical_columns_missing_values(self):
@@ -100,14 +119,12 @@ class PreProcessingClass:
         for column in data.select_dtypes("object").columns.drop(target_column):
             dummies = pandas.get_dummies(data[column], prefix=column)
             data = pandas.concat([data, dummies], axis=1)
-
             return data.drop(column, axis=1)
 
     def split_data_into_x_and_y(self, target_column):
         data = self.read_data()
         y = data[target_column]
         X = data.drop(target_column, axis=1)
-
         return X, y
 
     def split_data_into_train_and_test(self, target_column):
@@ -126,13 +143,4 @@ class PreProcessingClass:
         X_test = pandas.DataFrame(
             scaler.transform(X_test), index=X_test.index, columns=X_test.columns
         )
-
         return X_train, X_test, y_train, y_test
-
-
-# if __name__ == "__main__":
-
-#     cls = PreProcessingClass("data/SCMS_Delivery_History_Dataset.csv")
-#     data = cls.read_data()
-
-#     print(data)
