@@ -1,7 +1,9 @@
 import ui
-import requests
+import folium
 import classes
+import requests
 import urllib.parse
+from streamlit_folium import st_folium
 from streamlit_option_menu import option_menu
 
 
@@ -60,5 +62,14 @@ class HelperFunctions:
         response = requests.get(url).json()
         return response[0]["lat"], response[0]["lon"]
 
+
+
+
+
     def get_map(self, latitude, longitude):
-        pass
+        map = folium.Map(location=[latitude,longitude], zoom_start=14, tiles='OpenStreetMap',control_scale=True)
+        popup = folium.Popup(f"""<br/> This is a new line<br/>""",height= 200, width= 400)
+        map.add_child(folium.Marker(location= [latitude,longitude], popup=popup, icon=folium.Icon(color="blue", icon="home")))
+        st_folium(map, width=400, height=400)
+ 
+       
