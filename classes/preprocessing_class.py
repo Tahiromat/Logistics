@@ -145,9 +145,10 @@ class PreProcessingClass:
         return X_train, X_test, y_train, y_test
 
 
-
-if __name__ == '__main__':
-    PPC = PreProcessingClass("/home/tahir/Projects/Logistic/data/SCMS_Delivery_History.csv")
+if __name__ == "__main__":
+    PPC = PreProcessingClass(
+        "/home/tahir/Projects/Logistic/data/SCMS_Delivery_History.csv"
+    )
 
     data = PPC.read_data()
 
