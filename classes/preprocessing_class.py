@@ -143,3 +143,13 @@ class PreProcessingClass:
             scaler.transform(X_test), index=X_test.index, columns=X_test.columns
         )
         return X_train, X_test, y_train, y_test
+
+
+
+if __name__ == '__main__':
+    PPC = PreProcessingClass("/home/tahir/Projects/Logistic/data/SCMS_Delivery_History.csv")
+
+    data = PPC.read_data()
+
+    print(data.isna().mean())
+    # data.to_csv("/home/tahir/Projects/Logistic/data/SCMS_Delivery_History.csv", index=False)

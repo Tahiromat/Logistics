@@ -1,5 +1,7 @@
+from helpers.constants import Constants
 import ui
 import folium
+import pandas
 import classes
 import requests
 import urllib.parse
@@ -61,15 +63,32 @@ class HelperFunctions:
         )
         response = requests.get(url).json()
         return response[0]["lat"], response[0]["lon"]
-
-
-
-
-
-    def get_map(self, latitude, longitude):
-        map = folium.Map(location=[latitude,longitude], zoom_start=14, tiles='OpenStreetMap',control_scale=True)
-        popup = folium.Popup(f"""<br/> This is a new line<br/>""",height= 200, width= 400)
-        map.add_child(folium.Marker(location= [latitude,longitude], popup=popup, icon=folium.Icon(color="blue", icon="home")))
-        st_folium(map, width=400, height=400)
- 
        
+    # CREATING DATAFRAMEs
+    def create_dataframe_for_map(self, dataframe, param):
+        dct = classes.PreProcessingClass(Constants().get_data_path()).get_unique_values_and_count_for_column(dataframe, param)
+        new_dataframe = pandas.DataFrame()
+        lat = []
+        lon = []
+        for key in dct.keys():
+            latitude, longitude = self.get_latitude_and_longitude(key)
+            lat.append(latitude)
+            lon.append(longitude)
+        
+        new_dataframe["UniqueCountries"] = dct.keys()
+        new_dataframe["TotalNumberofShipment"] = dct.values()
+        new_dataframe["Latitude"] = lat
+        new_dataframe["Longitude"] = lon
+        new_dataframe.to_csv("data/dataframe_for_map.csv", index=False)
+
+
+    def get_map(self, dataframe, latitude, longitude):
+        total_shipment = list(dataframe["TotalNumberofShipment"])
+        lat = list(dataframe[latitude])
+        lon = list(dataframe[longitude])
+        map = folium.Map(location=[dataframe[latitude].mean(), dataframe[longitude].mean()], zoom_start=6, tiles='OpenStreetMap',control_scale=True)
+        
+        for la, lo, to in zip(lat, lon, total_shipment):
+            popup = folium.Popup(f"Total Shipments: {to}")
+            map.add_child(folium.Marker(location=[la, lo], popup=popup, icon=folium.Icon(color="blue", icon="!")))        
+        st_folium(map, width=1800, height=800)

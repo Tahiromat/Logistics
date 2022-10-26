@@ -5,7 +5,6 @@
 import helpers
 import streamlit
 
-
 def main():
 
     helpers.HelperFunctions(streamlit).page_configuration()
